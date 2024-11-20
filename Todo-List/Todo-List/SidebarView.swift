@@ -3,7 +3,7 @@ import SwiftUI
 struct SidebarView: View {
 
     let userCreatedGroups: [TaskGroup];
-    @State private var selection = TaskSection.all
+    @Binding var selection: TaskSection
 
     var body: some View {
         List(selection: $selection) {
@@ -22,11 +22,22 @@ struct SidebarView: View {
                 }
             }
         }
+        .safeAreaInset(edge: .bottom) {
+            Button(action: {
+
+            }, label: {
+                Label("Add Group", systemImage: "plus.circle")
+            })
+            .buttonStyle(.borderless)
+            .foregroundColor(.accentColor)
+            .padding()
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
     }
 }
 
 #Preview {
-    SidebarView(userCreatedGroups: TaskGroup.examples())
+    SidebarView(userCreatedGroups: TaskGroup.examples(), selection: .constant(.all))
         .listStyle(.sidebar)
 }
 
